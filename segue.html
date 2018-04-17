@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style/intro.css">
+  <style type="text/css">
+  img{
+  	padding-top: 20px;
+  }
+  </style>
+</head>
+
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">
+        <span class="nav-brand">
+          <span>.data(art)</span>
+        </span>
+      </a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right nav-font">
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
+
+<body>
+  <div class="all" align="center" style="position:relative">
+    <div>
+        <h1 class="page-header " id="h1">To help you plan your visit to the museum, use the following tool to explore the artworks on view.</h1>
+        <h1 class="page-header " id="h2">Use the map on the left to choose a gallery.</h1>
+        <h1 class="page-header " id="h3">In the center, artworks are grouped by artist, decreasing by iconicity (clockwise).</h1>
+        <h1 class="page-header " id="h4">Hover over individual artworks or other galleries (in the center) to see relationships with other artworks.</h1>
+        <h1 class="page-header " id="h5">On the right, you can see images of the selected work and its related works.</h1>
+    </div>
+    <div align="center" style="position:absolute; top:24px;">
+      <div id="a" style="float:left">
+         <img src="/img/left.png"  height="904"></img>
+      </div>
+      <div id="b" style="float:left; margin-left:44px">
+         <img src="/img/center.png"  height="904"></img>
+      </div>
+      <div id="c" style="float:left; margin-left:114px">
+         <img src="/img/right.png"  height="904"></img>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(function(){  // $(document).ready shorthand
+     $('#a, #b, #c, #h1, #h2, #h3, #h4, #h5').hide();
+  });
+
+  $(function(){  // $(document).ready shorthand
+    $('#h1').fadeIn(3000);
+
+    setTimeout(function(){
+     $('#h1').fadeOut(500)
+    }, 5000);
+
+    setTimeout(function(){
+      $('#h2, #a').fadeIn(2000);
+  }, 5501);
+
+    setTimeout(function(){
+     $('#h2').fadeOut(500)
+ }, 9502);
+
+    setTimeout(function(){
+      $('#h3, #b').fadeIn(2000);
+  }, 10003);
+
+    setTimeout(function(){
+     $('#h3').fadeOut(500)
+ }, 14003);
+
+    setTimeout(function(){
+      $('#h4').fadeIn(2000);
+  }, 14504);
+
+    setTimeout(function(){
+     $('#h4').fadeOut(500)
+ }, 18504);
+
+    setTimeout(function(){
+      $('#h5, #c').fadeIn(2000);
+  }, 19505);
+
+    setTimeout(function(){
+     $('#a, #b, #c, #h1, #h2, #h3, #h4, #h5').fadeOut(2000)
+ }, 24005);
+
+    setTimeout("location.href='main.html';", 26000);
+  });
+</script>
+</body>
+</html>

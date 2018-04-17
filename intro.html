@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>National Gallery of Art Viz</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!--optional color scales, you can specify your own color scale-->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style/intro.css">
+</head>
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">
+          <span class="nav-brand">
+            <span>.data(art)</span>
+          </span>
+        </a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right nav-font">
+              <li><a href="about.html">About</a></li>
+          </ul>
+      </div>
+    </div>
+</div>
+<body>
+	<div class="all" align="center">
+		<h1 id="caption" class="page-header">We have approximately 23,000 artworks in our collection.</h1>
+		<div class="" id="waffle"></div>
+		<div><img src="img/map_grey.svg" height="125" id="map"></img></div>
+		<div class="footer">
+			<button type="button" class="btn btn-default" onclick="goBack()">❮</button>
+			<button type="button" class="btn btn-default" onclick="goNext()">❯</button>
+            <br><br>
+            <a href="main.html">Skip intro</a>
+		</div>
+	</div>
+	<script>
+
+	w = 1240;
+	h = 550;
+	margin = {"top": 10, "right": 10, "bottom": 10, "left": 10};
+	width = w - margin.left - margin.right;
+	height = h - margin.top - margin.bottom;
+
+	// var data1 = [ { "name": "In Collection", "value": 23000} ]
+
+	// var data2 = [
+	//     { "name": "On View", "value": 1094},
+	//     { "name": "Off View", "value": 21906}
+	//   ]
+
+	// var data3 = [ { "name": "On View", "value": 1094} ]
+
+	// var data4 = [
+	//     { "name": "American", "value": 175},
+	//     { "name": "British", "value": 41},
+	//     { "name": "18th- and Early 19th-Century French", "value": 52},
+	//     { "name": "18th- and 19th-Century Spanish", "value": 9},
+	//     { "name": "17th-Century Dutch and Flemish", "value": 80},
+	//     { "name": "15th- to 16th-Century Netherlandish and German", "value": 88},
+	//    	{ "name": "17th- to 18th-Century Italian, French, and Spanish", "value": 78},
+	//     { "name": "16th-Century Italian, French, and Spanish", "value": 162},
+	//     { "name": "13th- to 16th-Century Italian", "value": 191},
+	//     { "name": "19th-Century French", "value": 202},
+	//    	{ "name": "Special Exhibitions", "value": 16}
+	// ]
+
+	//initiate
+	var viewId = "1_all"
+	var numPerRow = 240;
+	var size = 5;
+
+	var scale = d3.scaleLinear()
+					.domain([0, numPerRow - 1])
+					.range([0, size * numPerRow])
+
+	//inital waffle chart
+	var svg = d3.select("#waffle")
+					.append("svg")
+						.attr("width", width)
+						.attr("height", height)
+					.append("g")
+						//.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	svg.selectAll("rect")
+		.data(d3.range(23000))
+		.enter().append("rect")
+		.attr('x', (d, i)=> {
+				n = i % numPerRow
+				return scale(n)
+			})
+		.attr('y', (d,i)=> {
+				n = Math.floor(i / numPerRow)
+				return scale(n)
+		})
+		.attr('width', size)
+		.attr('height', size)
+		.attr("fill", "#5b5b5b")
+		.attr("stroke-width", 1.25)
+		.attr("stroke", "white")
+
+	//back button function
+	function goBack(){
+		console.log("clicked back");
+		if (viewId == "1_all") {
+			location.href = "/";
+		} else if (viewId == "2_onoffview") {
+			viewId = "1_all"
+
+			document.getElementById("caption").innerHTML = "We have approximately 23,000 artworks in our collection."
+
+			var waffle = svg.selectAll("rect")
+							.transition()
+							.duration(750)
+							.attr("fill", (d,i) => "#5b5b5b")
+
+		} else if (viewId=="3_onview") {
+			viewId = "2_onoffview"
+
+			document.getElementById("caption").innerHTML = "Approximately 5% of our collection (1,095 works) are currently on view.";
+
+			var numPerRow = 232;
+			var size = 5;
+
+			var scale = d3.scaleLinear()
+					.domain([0, numPerRow - 1])
+					.range([0, size * numPerRow])
+
+			var colorScale = d3.scaleThreshold()
+							.domain([1095])
+							.range(["#5b5b5b","#efefef"])
+
+			var waffle = svg.selectAll("rect")
+				.transition()
+				.duration(2000)
+				.attr('x', (d,i) => {
+						n = i % numPerRow
+						return scale(n)
+					})
+				.attr('y', (d,i) => {
+						n = Math.floor(i / numPerRow)
+						return scale(n)
+				})
+				.attr('width', size)
+				.attr('height', size)
+				.attr("fill", "#5b5b5b")
+				.attr("stroke-width", 1.25)
+				.attr("stroke", "white")
+
+			var waffle = svg.selectAll("rect")
+							.data(d3.range(23000));
+
+			waffle.enter().append("rect")
+					.transition()
+					.delay(1825)
+					.duration(1250)
+					.attr('x', (d,i) => {
+							n = i % numPerRow
+							return scale(n)
+						})
+					.attr('y', (d,i) => {
+							n = Math.floor(i / numPerRow)
+							return scale(n)
+					})
+					.attr('width', size)
+					.attr('height', size)
+					.attr("fill", (d,i) => colorScale(i))
+					.attr("stroke-width", 1.25)
+					.attr("stroke", "white")
+		} else if (viewId =="4_galleries") {
+			viewId = "3_onview"
+
+			document.getElementById("caption").innerHTML = "Let's take a closer look at the artworks on view...";
+			document.getElementById("map").src="img/map_grey.svg";
+
+			var waffle = svg.selectAll("rect")
+							.transition()
+							.duration(1250)
+							.attr("fill", (d,i) => "#5b5b5b")
+		} else if (viewId == "5_19thcentfrench") {
+			viewId = "4_galleries"
+
+			document.getElementById("caption").innerHTML = "The artworks on view are displayed in 11 different galleries.";
+			document.getElementById("map").src="img/map.svg";
+
+			var colorScale = d3.scaleThreshold()
+							.domain([42, 94, 295, 471, 549, 711, 902, 990, 1070, 1079])
+							.range(["#479F97", "#5DBEBA", "#A2D6CF", "#E57B6B", "#EFA3A3", "#F5C7C3", "#FCE7E1", "#7DC188", "#B9D7B3", "#EFBD2B", "#FCEBA4"])
+
+			var waffle = svg.selectAll("rect")
+							.transition()
+							.duration(1250)
+							.attr("fill", (d,i) => colorScale(i))
+		} else if (viewId == "6_twoworks") {
+			viewId = "5_19thcentfrench"
+
+			document.getElementById("caption").innerHTML = "The gallery with the most artworks (202) is the <i>19th-Century French</i> gallery.";
+
+			var numPerRow = 52;
+			var size = 23;
+
+			var scale = d3.scaleLinear()
+					.domain([0, numPerRow - 1])
+					.range([0, size * numPerRow])
+
+			var colorScale = d3.scaleThreshold()
+							.domain([94, 295])
+							.range(["#efefef", "#A2D6CF", "#efefef"])
+
+			var waffle = svg.selectAll("rect")
+				.transition()
+				//.duration(1000)
+				.attr('x', (d,i) => {
+						n = i % numPerRow
+						return scale(n)
+					})
+				.attr('y', (d,i) => {
+						n = Math.floor(i / numPerRow)
+						return scale(n)
+				})
+				.attr('width', size)
+				.attr('height', size)
+				.attr('fill', "#efefef")
+				.attr("stroke-width", 1.25)
+				.attr("stroke", "white")
+
+			var waffle = svg.selectAll("rect")
+							.data(d3.range(1095));
+
+			waffle.enter().append("rect")
+					.transition()
+					.duration(1000)
+					.attr('x', (d,i) => {
+							n = i % numPerRow
+							return scale(n)
+						})
+					.attr('y', (d,i) => {
+							n = Math.floor(i / numPerRow)
+							return scale(n)
+					})
+					.attr('width', size)
+					.attr('height', size)
+					.attr("fill", (d, i) => colorScale(i))
+					.attr("stroke-width", 1.25)
+					.attr("stroke", "white")
+		} else if (viewId == "7_twoworkslabeled") {
+			viewId = "6_twoworks"
+
+			document.getElementById("caption").innerHTML = "Let's take a closer look at two artworks in the <i>19th-Century French</i> gallery...";
+
+			svg.selectAll("rect")
+				.transition()
+				.duration(1250)
+				.attr("stroke", "white")
+		    	.attr("stroke-width", 2)
+
+		    svg.selectAll("polygon")
+		    	.style('opacity', .75)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove()
+
+			svg.selectAll("foreignObject")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove()
+
+		} else if (viewId == "8_iconicity") {
+			viewId = "7_twoworkslabeled"
+
+			document.getElementById("caption").innerHTML = "Here are two artworks, with their artists and additional information below.";
+
+			var size = 23;
+			var gap = 50;
+
+			var xscale = d3.scaleLinear()
+					.domain([0, 1])
+					.range([-1, 1])
+
+			var waffle = svg.selectAll("rect")
+							.data([756, 757]);
+			waffle.exit().remove();
+
+			waffle.enter().append("rect")
+
+			waffle.transition()
+					.duration(1250)
+					.attr('x', (d,i) => {
+							n = ((width / 2) - 20) + (xscale(i) * ((gap / 2) + size))
+							return n
+						})
+					.attr('y', (d,i) => {
+							n = (height / 4) - (size / 2)
+							return n
+					})
+					.attr('width', size)
+					.attr('height', size)
+					.attr("fill", "#A2D6CF")
+		} else if (viewId == "9_related") {
+			viewId = "8_iconicity"
+
+			document.getElementById("caption").innerHTML = "We can gauge their iconicity (a measure of how well-known they are) by the size of their squares.";
+            document.getElementById("map").src="img/map_highlight.svg";
+
+			monet_icon = 225.459278484781
+			fleury_icon = 13.7524984765608
+
+			var size = 23;
+			var gap = 50;
+
+			svg.selectAll("line")
+				.transition()
+                   	.duration(1000)
+                    .style('opacity', 0)
+                	.remove();
+			svg.selectAll("circle")
+				.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove();
+
+			var xscale = d3.scaleLinear()
+					.domain([0, 1])
+					.range([-1, 1])
+
+			var iconScale = d3.scaleLinear()
+					.domain([0, 1])
+					.range([monet_icon / 3, fleury_icon / 1.5])
+
+			var waffle = svg.selectAll("rect")
+							.data([756, 757]);
+			//waffle.exit().remove();
+
+			waffle.enter().append("rect")
+
+			waffle.transition()
+					.delay(750)
+					.duration(1250)
+					.attr('x', (d,i) => {
+							n = ((width / 2) - 20) + (xscale(i) * ((gap / 2) + size))
+							return n - iconScale(i) + 18
+						})
+					// .attr('y', 0)
+					.attr('y', (d,i) => {
+							n = (height/4) - (size / 2)
+							return n - iconScale(i) + 23
+					})
+					.attr('width', (d,i) => iconScale(i))
+					.attr('height', (d,i) => iconScale(i))
+					.attr("fill", "#A2D6CF")
+					.attr("stroke", "#749994")
+		    		.attr("stroke-width", 2)
+
+		    //labels
+		    var size = 23;
+			var gap = 50;
+			var tw = 325;
+			var arrow = 10;
+			var th = 285;
+			var img_h = 150;
+
+            ys = (height / 4) + (size / 2) + (2 * arrow)
+            x0 = (((width / 2) - 20) - ((gap / 2) + tw)) + 8
+            x1 = ((width / 2) - 20) + ((gap / 2) + size) - 8
+
+            poly1 = "0,0"
+            poly2 = "0," + th
+            poly3 = tw + "," + th
+            poly4 = tw + ",0"
+
+            //tooltip 1 (monet)
+            poly5 = (tw - arrow) + ",0"
+            poly6 = (tw - 2 * arrow) + ",-" + arrow
+            poly7 = (tw - 3 * arrow) + ",0"
+
+			var fo = svg.append("foreignObject")
+					.attr('x', x0)
+                    .attr('y', ys)
+                    .attr('width', tw)
+                    .attr('height', th)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity', 0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-left')
+
+			div.append('div')
+					.attr("float", "right")
+				.append('img')
+					.attr('src', "img/monet.jpg")
+					.attr('height', img_h)
+
+			div.append("div")
+					.attr("float", "left")
+				.append('p')
+					.html("Claude Monet<br><i>The Houses of Parliament, Sunset</i>, 1903<br>Oil on canvas<br>Chester Dale Collection<br>1963.10.48")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly2 + " " + poly3 + " " + poly4 + " " + poly5 + " " + poly6 + " " + poly7)
+                .attr('height', th + arrow)
+                .attr('width', tw)
+                .attr('fill', '#D8D8D8')
+                .attr('opacity', 0)
+                .attr('transform', 'translate(' + x0 + ',' + ys + ')')
+                .transition()
+                	.delay(1000)
+					.duration(1250)
+					.style('opacity', .75)
+
+            //tooltip 2 (monet)
+            poly5 = (arrow) + ",0"
+            poly6 = (2 * arrow) + ",-" + arrow
+            poly7 = (3 * arrow) + ",0"
+
+			var fo = svg.append("foreignObject")
+					.attr('x', x1)
+                    .attr('y', ys)
+                    .attr('width', tw)
+                    .attr('height', th)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity',0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-right')
+
+			div.append('div')
+					.attr("float", "right")
+				.append('img')
+					.attr('src', "img/fleury.jpg")
+					.attr('height', img_h)
+
+			div.append("div")
+					.attr("float", "left")
+				.append('p')
+					.html("Léon-François-Antoine Fleury<br><i>On the Bay of Naples</i>, c. 1830<br>Oil on paper<br>Gift of Frank Anderson Trapp<br>2004.166.15")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly2 + " " + poly3 + " " + poly4 + " " + poly5 + " " + poly6 + " " + poly7)
+                .attr('height', th + arrow)
+                .attr('width', tw)
+                .attr('fill', '#D8D8D8')
+                .attr('opacity', 0)
+                .attr('transform', 'translate(' + x1 + ',' + ys + ')')
+                .transition()
+                	.delay(1000)
+					.duration(1250)
+					.style('opacity', .75)
+
+			//transition both
+            svg.selectAll("foreignObject")
+				.transition()
+					.delay(1000)
+	                .duration(1250)
+	                .style('opacity', 1)
+		} else if (viewId=="10_line") {
+			viewId = "9_related"
+
+			document.getElementById("caption").innerHTML = "Artworks (squares) are linked to galleries (circles) if the galleries contain other related artworks.";
+
+			svg.selectAll("#french")
+				.transition()
+				.duration(1000)
+					.attr("stroke-width", 3)
+
+		} else if (viewId=="11_example") {
+			viewId = "10_line"
+
+			document.getElementById("caption").innerHTML = "A thicker link means that there are more related works in that gallery.";
+
+			svg.selectAll("polygon")
+		    	.style('opacity', .75)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove()
+
+			svg.selectAll("foreignObject")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove()
+		}
+	}
+
+	//next function button
+	function goNext(){
+		console.log("clicked next");
+		if (viewId == "1_all"){
+			viewId = "2_onoffview"
+
+			document.getElementById("caption").innerHTML = "Approximately 5% of our collection (1,095 works) are currently on view.";
+
+			var colorScale = d3.scaleThreshold()
+							.domain([1095])
+							.range(["#5b5b5b","#efefef"])
+
+			var waffle = svg.selectAll("rect")
+							.transition()
+							.duration(750)
+							.attr("fill", (d,i) => colorScale(i))
+		} else if (viewId == "2_onoffview"){
+			viewId = "3_onview"
+
+			document.getElementById("caption").innerHTML = "Let's take a closer look at the artworks on view...";
+
+			var numPerRow = 52;
+			var size = 23;
+
+			var scale = d3.scaleLinear()
+					.domain([0, numPerRow - 1])
+					.range([0, size * numPerRow])
+
+			var waffle = svg.selectAll("rect")
+							.data(d3.range(1095));
+			waffle.exit().remove();
+			waffle.enter().append("rect")
+
+			waffle.transition()
+					.duration(1500)
+					.attr('x', (d,i) => {
+							n = i % numPerRow
+							return scale(n)
+						})
+					.attr('y', (d,i) => {
+							n = Math.floor(i / numPerRow)
+							return scale(n)
+					})
+					.attr('width', size)
+					.attr('height', size)
+					.attr("fill", "#5b5b5b")
+					.attr("stroke-width", 3)
+					.attr("stroke", "white")
+		} else if (viewId == "3_onview") {
+			viewId = "4_galleries"
+
+			document.getElementById("caption").innerHTML = "The artworks on view are displayed in 11 different galleries.";
+			document.getElementById("map").src="img/map.svg";
+			// $("#map").hide()
+
+			var colorScale = d3.scaleThreshold()
+							.domain([42, 94, 295, 471, 549, 711, 902, 990, 1070, 1079])
+							.range(["#479F97", "#5DBEBA", "#A2D6CF", "#E57B6B", "#EFA3A3", "#F5C7C3", "#FCE7E1", "#7DC188", "#B9D7B3", "#EFBD2B", "#FCEBA4"])
+
+			var waffle = svg.selectAll("rect")
+							.transition()
+							.duration(1250)
+							.attr("fill", (d,i) => colorScale(i))
+		} else if (viewId == "4_galleries") {
+			viewId = "5_19thcentfrench"
+
+			document.getElementById("caption").innerHTML = "The gallery with the most artworks (202) is the <i>19th-Century French</i> gallery.";
+			document.getElementById("map").src="img/map_highlight.svg";
+
+			var colorScale = d3.scaleThreshold()
+							.domain([94, 295])
+							.range(["#efefef", "#A2D6CF", "#efefef"])
+
+			var waffle = svg.selectAll("rect")
+							.transition()
+							.duration(1250)
+							.attr("fill", (d,i) => colorScale(i))
+
+		} else if (viewId == "5_19thcentfrench") {
+			viewId = "6_twoworks"
+
+			document.getElementById("caption").innerHTML = "Let's take a closer look at two artworks in the <i>19th-Century French</i> gallery...";
+
+			var size = 23;
+			var gap = 50;
+
+			var xscale = d3.scaleLinear()
+					.domain([0, 1])
+					.range([-1, 1])
+
+			var waffle = svg.selectAll("rect")
+							.data([756, 757]);
+			waffle.exit().transition().duration(500).style('opacity',0).remove();
+
+			waffle.enter().append("rect")
+
+			waffle.transition()
+					.duration(0)
+					.attr("fill", "#A2D6CF")
+					.attr("y", 69)
+					.transition()
+					.duration(1750)
+					.attr('x', (d,i) => {
+							n = ((width / 2) - 20) + (xscale(i) * ((gap / 2) + size))
+							return n
+						})
+					.attr('y', (d,i) => {
+							n = (height / 4) - (size / 2)
+							return n
+					})
+					.attr('width', size)
+					.attr('height', size)
+					// .attr("stroke", "#749994")
+		   //  		.attr("stroke-width", 2)
+					// .attr("stroke-width", 3)
+					// .attr("stroke", "white")
+
+		} else if (viewId == "6_twoworks"){
+			viewId = "7_twoworkslabeled"
+
+			document.getElementById("caption").innerHTML = "Here are two artworks, with their artists and additional information below.";
+
+			svg.selectAll("rect")
+				.transition()
+				.duration(1250)
+				.attr("stroke", "#749994")
+		    	.attr("stroke-width", 2)
+
+			var size = 23;
+			var gap = 50;
+			var tw = 325;
+			var arrow = 10;
+			var th = 285;
+			var img_h = 150;
+
+            ys = (height / 4) + (size / 2) + (2 * arrow)
+            x0 = (((width / 2) - 20) - ((gap / 2) + tw)) + 8
+            x1 = ((width / 2) - 20) + ((gap / 2) + size) - 8
+
+            poly1 = "0,0"
+            poly2 = "0," + th
+            poly3 = tw + "," + th
+            poly4 = tw + ",0"
+
+            //tooltip 1 (monet)
+            poly5 = (tw - arrow) + ",0"
+            poly6 = (tw - 2 * arrow) + ",-" + arrow
+            poly7 = (tw - 3 * arrow) + ",0"
+
+			var fo = svg.append("foreignObject")
+					.attr('x', x0)
+                    .attr('y', ys)
+                    .attr('width', tw)
+                    .attr('height', th)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity', 0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-left')
+
+			div.append('img')
+					.attr('src', "img/monet.jpg")
+					.attr('height', img_h)
+
+			div.append('p')
+					.html("Claude Monet<br><i>The Houses of Parliament, Sunset</i>, 1903<br>Oil on canvas<br>Chester Dale Collection<br>1963.10.48")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly2 + " " + poly3 + " " + poly4 + " " + poly5 + " " + poly6 + " " + poly7)
+                .attr('height', th + arrow)
+                .attr('width', tw)
+                .attr('fill', '#D8D8D8')
+                .attr('transform', 'translate(' + x0 + ',' + ys + ')')
+                .style('opacity', 0)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', .75)
+
+            //tooltip 2 (fleury)
+            poly5 = (arrow) + ",0"
+            poly6 = (2 * arrow) + ",-" + arrow
+            poly7 = (3 * arrow) + ",0"
+
+			var fo = svg.append("foreignObject")
+					.attr('x', x1)
+                    .attr('y', ys)
+                    .attr('width', tw)
+                    .attr('height', th)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity', 0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-right')
+
+			div.append('img')
+					.attr('src', "img/fleury.jpg")
+					.attr('height', img_h)
+
+			div.append('p')
+					.html("Léon-François-Antoine Fleury<br><i>On the Bay of Naples</i>, c. 1830<br>Oil on paper<br>Gift of Frank Anderson Trapp<br>2004.166.15")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly2 + " " + poly3 + " " + poly4 + " " + poly5 + " " + poly6 + " " + poly7)
+                .attr('height', th + arrow)
+                .attr('width', tw)
+                .attr('fill', '#D8D8D8')
+                .attr('transform', 'translate(' + x1 + ',' + ys + ')')
+                .style('opacity', 0)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', .75)
+
+            //transition both
+            svg.selectAll("foreignObject")
+				.transition()
+	                .duration(1250)
+	                .style('opacity', 1)
+		} else if (viewId == "7_twoworkslabeled") {
+			viewId = "8_iconicity"
+
+			document.getElementById("caption").innerHTML = "We can gauge their iconicity (a measure of how well-known they are) by the size of their squares.";
+
+			monet_icon = 225.459278484781
+			fleury_icon = 13.7524984765608
+
+			var size = 23;
+			var gap = 50;
+
+			var xscale = d3.scaleLinear()
+					.domain([0, 1])
+					.range([-1, 1])
+
+			var iconScale = d3.scaleLinear()
+					.domain([0, 1])
+					.range([monet_icon / 3, fleury_icon / 1.5])
+
+			var waffle = svg.selectAll("rect")
+							.data([756, 757]);
+			waffle.exit().remove();
+
+			waffle.enter().append("rect")
+
+			waffle.transition()
+					.duration(1250)
+					.attr('x', (d,i) => {
+							n = ((width / 2) - 20) + (xscale(i) * ((gap / 2) + size))
+							return n - iconScale(i) + 18
+						})
+					// .attr('y', 0)
+					.attr('y', (d,i) => {
+							n = (height / 4) - (size / 2)
+							return n - iconScale(i) + 23
+					})
+					.attr('width', (d,i) => iconScale(i))
+					.attr('height', (d,i) => iconScale(i))
+					.attr("fill", "#A2D6CF")
+					.attr("stroke", "#749994")
+		    		.attr("stroke-width", 2)
+		} else if (viewId == "8_iconicity") {
+			viewId = "9_related"
+
+			document.getElementById("caption").innerHTML = "Artworks (squares) are linked to galleries (circles) if the galleries contain other related artworks.";
+            document.getElementById("map").src="img/map_highlight_2.svg";
+
+			//remove everything except monet square
+		    var waffle = svg.selectAll("rect")
+							.data([756]);
+			waffle.exit().remove();
+
+			waffle.enter().append("rect");
+
+			svg.selectAll("foreignObject")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove();
+			svg.selectAll("polygon")
+				.style('opacity', .75)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove();
+
+			//lines
+			svg.append("line")
+                .attr("id", "french")
+		    	.attr("x1", 525)
+				.attr("y1", 110)
+		        .attr("x2", 350)
+		        .attr("y2", 320)
+		        .attr("stroke-width", 3)
+		        .attr("stroke", "#A2D6CF")
+		        .style('opacity', 0)
+		        	.transition()
+		        	.delay(750)
+		        	.duration(1250)
+		        	.style('opacity', 1)
+
+		    svg.append("line")
+		    	.attr("x1", 525)
+				.attr("y1", 110)
+		        .attr("x2", 620)
+		        .attr("y2", 380)
+		        .attr("stroke-width", 3)
+		        .attr("stroke", "#E57B6B")
+		        .style('opacity', 0)
+		        .transition()
+		        	.delay(750)
+		        	.duration(1250)
+		        	.style('opacity', 1)
+
+		    //square
+		    svg.append("rect")
+		    	.attr("x", 484.84690717173964)
+		    	.attr("y", 68.84690717173966)
+		    	.attr("width", 75.15309282826034)
+		    	.attr("height", 75.15309282826034)
+		    	.attr("fill", "#A2D6CF")
+		    	.attr("stroke", "#749994")
+		    	.attr("stroke-width", 2)
+
+			// apppend gallery circles
+			r = 50;
+
+			svg.append("circle")
+				.attr("cx", 350)
+				.attr("cy", 320)
+		        .attr("r", r)
+		        .attr("fill", "#A2D6CF")
+		        .attr("stroke", "#749994")
+		    	.attr("stroke-width", 2)
+		    	.style('opacity', 0)
+		    	.transition()
+		        	.delay(750)
+		        	.duration(1000)
+		        	.style('opacity', 1)
+
+		    svg.append("circle")
+				.attr("cx", 620)
+				.attr("cy", 380)
+		        .attr("r", r)
+		        .attr("fill", "#E57B6B")
+		        .attr("stroke", "#A4584D")
+		    	.attr("stroke-width", 2)
+		    	.style('opacity', 0)
+		    	.transition()
+		        	.delay(750)
+		        	.duration(1000)
+		        	.style('opacity', 1)
+
+		} else if (viewId == "9_related"){
+			viewId = "10_line"
+
+			document.getElementById("caption").innerHTML = "A thicker link means that there are more related works in that gallery.";
+
+			svg.selectAll("#french")
+				.transition()
+				.duration(1000)
+					.attr("stroke-width", 12)
+
+		} else if (viewId == "10_line"){
+			viewId = "11_example"
+
+			document.getElementById("caption").innerHTML = "For example, this Monet is related to  three works in the <i>19th-Century French</i> gallery and one in the <i>American</i> gallery.";
+
+			monet_icon = 225.459278484781
+			fleury_icon = 13.7524984765608
+
+			var size = 23;
+			var gap = 50;
+			var tw = 325;
+			var arrow = 10;
+			var th = 280;
+			var img_h = 150;
+
+            ys = 5
+            x0 = (width / 2)
+
+            poly1 = "0,0"
+            poly2 = "0," + th
+            poly3 = tw + "," + th
+            poly4 = tw + ",0"
+
+            //tooltip 1 (monet)
+            poly5 = "0," + (9 * arrow)
+            poly6 = "-" + arrow + "," + (10 * arrow)
+            poly7 = "0," + (11 * arrow)
+
+			var fo = svg.append("foreignObject")
+					.attr('x', x0)
+                    .attr('y', ys)
+                    .attr('width', tw)
+                    .attr('height', th)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity', 0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-right')
+
+			div.append('img')
+					.attr('src', "img/monet.jpg")
+					.attr('height', img_h)
+
+			div.append('p')
+					.html("Claude Monet<br><i>The Houses of Parliament, Sunset</i>, 1903<br>Oil on canvas<br>Chester Dale Collection<br>1963.10.48")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly5 + " " + poly6 + " " + poly7 + " " + poly2 + " " + poly3 + " " + poly4)
+                .attr('height', th + arrow)
+                .attr('width', tw)
+                .attr('fill', '#D8D8D8')
+                .attr('transform', 'translate(' + x0 + ',' + ys + ')')
+                .style('opacity', 0)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', .75)
+
+            //tooltip french gallery
+			var tw2 = 220;
+			var th2 = 50;
+			var x = 350 - 40;
+			var y  = 395;
+
+			poly1 = "0,0"
+            poly2 = "0," + th2
+            poly3 = tw2 + "," + th2
+            poly4 = tw2 + ",0"
+
+            poly5 = (3 * arrow) + ",0"
+            poly6 = (4 * arrow) + ",-" + arrow
+            poly7 = (5 * arrow) + ",0"
+
+			var fo = svg.append("foreignObject")
+					.attr('x', x)
+                    .attr('y', y)
+                    .attr('width', tw2)
+                    .attr('height', th2)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity', 0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-right')
+
+			div.append('p')
+				.html("<i>19th-Century French</i> Gallery")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly2 + " " + poly3 + " " + poly4 + " " + poly5 + " " + poly6 + " " + poly7)
+                .attr('height', th2 + arrow)
+                .attr('width', tw2)
+                .attr('fill', '#D8D8D8')
+                .attr('transform', 'translate(' + x + ',' + y + ')')
+                .style('opacity', 0)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', .75)
+
+            //tooltip american gallery
+            var tw3 = 138;
+            var x = 620 - 40;
+            var y = 455;
+
+            poly1 = "0,0"
+            poly2 = "0," + th2
+            poly3 = tw3 + "," + th2
+            poly4 = tw3 + ",0"
+
+            var fo = svg.append("foreignObject")
+					.attr('x', x)
+                    .attr('y', y)
+                    .attr('width', tw3)
+                    .attr('height', th2)
+                    .attr('class', 'svg-tooltip')
+                    .style('opacity', 0)
+
+			var div = fo.append("xhtml:div")
+				.append("div")
+				.attr('class', 'tooltip-right')
+
+			div.append('p')
+				.html("<i>American</i> Gallery")
+
+			svg.insert('polygon', '.svg-tooltip')
+                .attr('points', poly1 + " " + poly2 + " " + poly3 + " " + poly4 + " " + poly5 + " " + poly6 + " " + poly7)
+                .attr('height', th2 + arrow)
+                .attr('width', tw3)
+                .attr('fill', '#D8D8D8')
+                .attr('transform', 'translate(' + x + ',' + y + ')')
+                .style('opacity', 0)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', .75)
+
+            //transition all
+            svg.selectAll("foreignObject")
+				.transition()
+	                .duration(1250)
+	                .style('opacity', 1)
+
+		} else if (viewId == "11_example"){
+
+			svg.selectAll("rect")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                    .remove();
+			svg.selectAll("circle")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                    .remove();
+			svg.selectAll("line")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                    .remove();
+            svg.selectAll("polygon")
+		    	.style('opacity', .75)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove();
+			svg.selectAll("foreignObject")
+				.style('opacity', 1)
+					.transition()
+                   	.duration(1250)
+                    .style('opacity', 0)
+                	.remove();
+
+			setTimeout("location.href='segue.html';", 1300);
+		}
+
+	}
+	//		var data4 = [
+	//     { "name": "British", "value": 41},
+	//     { "name": "18th- and Early 19th-Century French", "value": 52},
+	//     { "name": "19th-Century French", "value": 202},
+	//     { "name": "American", "value": 175},
+	//	   { "name": "17th- to 18th-Century Italian, French, and Spanish", "value": 78},
+	//     { "name": "16th-Century Italian, French, and Spanish", "value": 162},
+	//     { "name": "13th- to 16th-Century Italian", "value": 191},
+	//     { "name": "15th- to 16th-Century Netherlandish and German", "value": 88},
+	//     { "name": "17th-Century Dutch and Flemish", "value": 80},
+	//     { "name": "18th- and 19th-Century Spanish", "value": 9},
+	//    	{ "name": "Special Exhibitions", "value": 16}
+	// ]
+	</script>
+</body>
+</html>

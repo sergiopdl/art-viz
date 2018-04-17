@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>National Gallery of Art Viz</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!--optional color scales, you can specify your own color scale-->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/intro.css">
+    <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+    <style type="text/css">
+    img {
+    	padding-top: 20px;
+    }
+    </style>
+</head>
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">
+          <span class="nav-brand">
+            <span>.data(art)</span>
+          </span>
+        </a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right nav-font">
+              <li><a href="about.html">About</a></li>
+          </ul>
+      </div>
+    </div>
+</div>
+<body>
+  <div class="all" align="center">
+	<h1 class="page-header ">Welcome to the National Gallery of Art</h1>
+		<div><img src="img/map.svg"></img></div>
+		<div class="footer">
+			<button type="button" class="next btn btn-default" onclick="goNext()"><b>Enter</b></button>
+            <br><br><br>
+            <a href="main.html">Skip intro</a>
+		</div>
+	</div>
+	<script>
+	function goNext() {
+		location.href = "intro.html";
+	}
+	</script>
+</body>
+</html>

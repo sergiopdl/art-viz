@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<head>
+	<!-- Latest compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+	<link rel="stylesheet" href="style/main.css">
+</head>
+
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+	  <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">
+          <span class="nav-brand">
+            <span>.data(art)</span>
+          </span>
+        </a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right nav-font">
+              <li><a href="about.html">About</a></li>
+          </ul>
+      </div>
+    </div>
+</div>
+
+<body>
+	<header></header>
+	<h1 class="page-header text-center">Welcome to the National Gallery of Art</h1>
+	<div class="container-fluid map-margin-bottom">
+		<div class="row col-lg-3 col-lg-md-12">
+			<div id="ngamap">
+				<!-- <div id="maptitle">Legend</div> -->
+				<div id="maptitle2">West Wing Main Floor</div>
+				<div id="image_map">
+					<img id="mapimg1" src="img/map.svg" width=300 alt="Map of Floor Plan">
+					<svg id="maplines" height="135" width="300">
+						 <polygon id=msvg1 points="1,49, 1,26, 26,27, 26,2, 58,2, 58,14, 49,14, 49,27, 47,27, 47,39, 38,39, 38,54, 26,54, 26,49, 2,49"/>
+						 <polygon id=msvg2 points="47,39, 47,27, 49,27, 49,14, 58,14, 68,14, 68,27, 122,27, 122,52, 79,52, 79,54, 67,54, 67,39, 47,39"/>
+						 <polygon id=msvg3 points="174,52, 174,27, 217,27, 217,2, 238,2, 238,15, 237,15, 237,28, 238,28, 238,39, 229,39, 229,54, 229,39, 229,54, 217,54, 217,52, 174,51"/>
+						 <polygon id=msvg4 points="239,39, 239,28, 237,28, 237,15, 238,15, 238,2, 270,2, 270,54, 259,54, 259,39, 239,39"/>
+						 <polygon id=msvg5 points="259,64, 270,64, 270,73, 289,73, 289,66, 295,66, 295,91, 270,91, 270,116, 217,116, 217,103, 228,103, 228,90, 238,90, 238,79, 259,79"/>
+						 <polygon id=msvg6 points="205,66, 218,66, 218,64, 229,64, 229,79, 238,79, 238,90, 228,90, 228,103, 217,103, 217,77, 205,77, 205,66"/>
+						 <polygon id=msvg7 points="174,91, 174,77, 187,77, 187,66, 204,66, 204,77, 217,77, 217,91, 174,91"/>
+						 <polygon id=msvg8 points="174,77, 174,66, 187,66, 187,77"/>
+						 <polygon id=msvg9 points="58,79, 67,79, 67,54, 79,54, 79,66, 129,66, 129,91, 79,91, 79,102, 58,102, 58,79"/>
+						 <polygon id=msvg10 points="26,116, 26,103, 47,103, 47,79, 58,79, 58,103, 79,103, 79,116, 26,116"/>
+						 <polygon id=msvg11 points="1,66, 18,66, 18,77, 26,77, 26,64, 38,64, 38,79, 47,79, 47,102, 26,102, 26,91, 1,91, 1,66"/>
+					</svg>
+					<img style="z-index: 1" id="mapimg" src="img/map.svg" width=300px alt="Map of Floor Plan" usemap="#wwmap">
+					<map name="wwmap">
+						<area class="imap" id="16c Italian  French  & Spanish" title="16c Italian  French  & Spanish" href="hold" target="_blank" shape=poly coords="1,49, 1,26, 26,27, 26,2, 58,2, 58,14, 49,14, 49,27, 47,27, 47,39, 38,39, 38,54, 26,54, 26,49, 2,49">
+						<area class="imap" id="13c to 16c Italian" title="13c to 16c Italian" href="hold" target="_blank" shape=poly coords="47,39, 47,27, 49,27, 49,14, 58,14, 68,14, 68,27, 122,27, 122,52, 79,52, 79,54, 67,54, 67,39, 47,39">
+						<area class="imap" id="19c French" title="19c French" href="hold" target="_blank" shape=poly coords="174,52, 174,27, 217,27, 217,2, 238,2, 238,15, 237,15, 237,28, 238,28, 238,39, 229,39, 229,54, 229,39, 229,54, 217,54, 217,52, 174,51">
+						<area class="imap" id="Special Exhibitions" title="Special Exhibitions" href="hold" target="_blank" shape=poly coords="239,39, 239,28, 237,28, 237,15, 238,15, 238,2, 270,2, 270,54, 259,54, 259,39, 239,39">
+						<area class="imap" id="American" title="American" href="hold" target="_blank" shape=poly coords="259,64, 270,64, 270,73, 289,73, 289,66, 295,66, 295,91, 270,91, 270,116, 217,116, 217,103, 228,103, 228,90, 238,90, 238,79, 259,79">
+						<area class="imap" id="British" title="British" href="hold" target="_blank" shape=poly coords="205,66, 218,66, 218,64, 229,64, 229,79, 238,79, 238,90, 228,90, 228,103, 217,103, 217,77, 205,77, 205,66">
+						<area class="imap" id="18c to early 19c French" title="18c to early 19c French" href="hold" target="_blank" shape=poly coords="174,91, 174,77, 187,77, 187,66, 204,66, 204,77, 217,77, 217,91, 174,91">
+						<area class="imap" id="18c & 19c Spanish" title="18c & 19c Spanish" href="hold" target="_blank" shape=poly coords="174,77, 174,66, 187,66, 187,77">
+						<area class="imap" id="17c Dutch & Flemish" title="17c Dutch & Flemish" href="hold" target="_blank" shape=poly coords="58,79, 67,79, 67,54, 79,54, 79,66, 129,66, 129,91, 79,91, 79,102, 58,102, 58,79">
+						<area class="imap" id="15c to 16c Netherlandish & German" title="15c to 16c Netherlandish & German" href="hold" target="_blank" shape=poly coords="26,116, 26,103, 47,103, 47,79, 58,79, 58,103, 79,103, 79,116, 26,116">
+						<area class="imap" id="17c to 18c Italian  French  & Spanish" title="17c to 18c Italian  French  & Spanish" href="hold" target="_blank" shape=poly coords="1,66, 18,66, 18,77, 26,77, 26,64, 38,64, 38,79, 47,79, 47,102, 26,102, 26,91, 1,91, 1,66">
+					</map>
+				</div>
+			</div>
+		</div>
+		<div class="row col-lg-7 col-lg-md-12">
+			<svg id="svg1"></svg>
+		</div>
+		<div class="row col-lg-2 col-lg-md-12">
+			<div id="infobox">
+				<h2 id="infoh"></h2>
+					<div id="infotitle"></div>
+					<div class=c_container>
+						<div id="infoimg"></div>
+						<div id="infogenes"></div>
+					</div>
+				<div id="rwh2"></div>
+				<div id="rwgal"></div>
+				<div id="relworks"></div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid"
+		<div class="row col-lg-3 col-lg-md-12">
+			<div id="legend">
+				<h2>Legend</h2>
+			</div>
+		</div>
+	</div>
+
+<script src="main.js"></script>
+</body>
+</html>
