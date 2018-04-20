@@ -320,7 +320,6 @@ function updateGraph(selected_gal) {
 		// SVG onhold
 		d3.select('#svg1').on("click", function() {hold=!hold});
 
-
 		// ----------------------------------
 		// FUNCTIONS
 		// ----------------------------------

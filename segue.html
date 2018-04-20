@@ -40,30 +40,41 @@
 </div>
 
 <body>
-  <div class="all" align="center" style="position:relative">
-    <div>
+  <div class="all">
+    <div align="center">
         <h1 class="page-header " id="h1">To help you plan your visit to the museum, use the following tool to explore the artworks on view.</h1>
         <h1 class="page-header " id="h2">Use the map on the left to choose a gallery.</h1>
-        <h1 class="page-header " id="h3">In the center, artworks are grouped by artist, decreasing by iconicity (clockwise).</h1>
-        <h1 class="page-header " id="h4">Hover over individual artworks or other galleries (in the center) to see relationships with other artworks.</h1>
-        <h1 class="page-header " id="h5">On the right, you can see images of the selected work and its related works.</h1>
+        <h1 class="page-header " id="h3">Artworks are grouped by artist, decreasing by iconicity (clockwise).</h1>
+        <h1 class="page-header " id="h4">In the center, galleries are ordered according to the same layout as the map (clockwise).</h1>
+        <h1 class="page-header " id="h5">Links from artworks to galleries indicate related works in those galleries.</h1>
+        <h1 class="page-header " id="h6">Hover over artworks or galleries to isolate relationships with other artworks.</h1>
+        <h1 class="page-header " id="h7">On the right, you can see images of the selected work and its related works.</h1>
     </div>
-    <div align="center" style="position:absolute; top:24px;">
-      <div id="a" style="float:left">
-         <img src="/img/left.png"  height="904"></img>
+    <div class="container-fluid">
+      <div id="a" class="row col-lg-3">
+         <img src="/img/map.png" height="768" style="padding-top: 0px"></img>
       </div>
-      <div id="b" style="float:left; margin-left:44px">
-         <img src="/img/center.png"  height="904"></img>
+      <div id="b" class="row col-lg-7" align="center">
+         <img src="/img/artists.png" height="768"></img>
       </div>
-      <div id="c" style="float:left; margin-left:114px">
-         <img src="/img/right.png"  height="904"></img>
+      <div id="c" class="row col-lg-7" align="center">
+         <img src="/img/galleries.png" height="768"></img>
+      </div>
+      <div id="d" class="row col-lg-7" align="center">
+         <img src="/img/artists_and_galleries.png" height="768"></img>
+      </div>
+      <div id="e" class="row col-lg-7" align="center">
+         <img src="/img/hover.png" height="768"></img>
+      </div>
+      <div id="f" class="row col-lg-2">
+         <img src="/img/related_works.png" height="768" style="padding-top: 0px"></img>
       </div>
     </div>
   </div>
 
   <script>
   $(function(){  // $(document).ready shorthand
-     $('#a, #b, #c, #h1, #h2, #h3, #h4, #h5').hide();
+     $('#a, #b, #c, #d, #e, #f, #h1, #h2, #h3, #h4, #h5, #h6, #h7').hide();
   });
 
   $(function(){  // $(document).ready shorthand
@@ -79,33 +90,49 @@
 
     setTimeout(function(){
      $('#h2').fadeOut(500)
- }, 9502);
+ }, 11502);
 
     setTimeout(function(){
       $('#h3, #b').fadeIn(2000);
-  }, 10003);
+  }, 12003);
 
     setTimeout(function(){
-     $('#h3').fadeOut(500)
- }, 14003);
+     $('#h3, #b').fadeOut(500)
+ }, 18004);
 
     setTimeout(function(){
-      $('#h4').fadeIn(2000);
-  }, 14504);
+      $('#h4, #c').fadeIn(2000);
+  }, 18505);
 
     setTimeout(function(){
-     $('#h4').fadeOut(500)
- }, 18504);
+     $('#h4, #c').fadeOut(500)
+ }, 24506);
 
     setTimeout(function(){
-      $('#h5, #c').fadeIn(2000);
-  }, 19505);
+      $('#h5, #d').fadeIn(2000);
+  }, 25007);
 
     setTimeout(function(){
-     $('#a, #b, #c, #h1, #h2, #h3, #h4, #h5').fadeOut(2000)
- }, 24005);
+      $('#h5, #d').fadeOut(500)
+  }, 31008);
 
-    setTimeout("location.href='main.html';", 26000);
+    setTimeout(function(){
+      $('#h6, #e').fadeIn(2000);
+  }, 31509);
+
+    setTimeout(function(){
+      $('#h6').fadeOut(500)
+  }, 37510);
+
+    setTimeout(function(){
+      $('#h7, #f').fadeIn(2000);
+  }, 38011);
+
+    setTimeout(function(){
+     $('#a, #b, #c, #d, #e, #f, #h1, #h2, #h3, #h4, #h5, #h6, #h7').fadeOut(2000)
+ }, 46012);
+
+    setTimeout("location.href='main.html';", 48013);
   });
 </script>
 </body>
