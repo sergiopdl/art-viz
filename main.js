@@ -119,9 +119,9 @@ function updateGraph(selected_gal) {
 		    if (typeof(s) != "undefined" & typeof(t) != "undefined") {
 				// defines selected gallery artwork as first in the link, target gallery as second
 				if(s.gallery==selected_gal) {link["sel"]=s.id}
-					else {link["gal"]=s.gallery; links_galnodes[s.gallery].push(s)};
+					else {link["gal"]=s.gallery;};
 				if(t.gallery==selected_gal) {link["sel"]=t.id}
-					else {link["gal"]=t.gallery; links_galnodes[t.gallery].push(t)};
+					else {link["gal"]=t.gallery;};
 
 				// adds links from artworks that are both in selected gallery
 				if(s.gallery==selected_gal & t.gallery==selected_gal) {
@@ -135,6 +135,8 @@ function updateGraph(selected_gal) {
 					else { // add links from an artwork to a gallery (& between the selected gallery and the target gallery)
 						links_gallery.push([link.sel, link.gal,1]);
 						links_galonly.push([s.gallery, t.gallery,1]);
+						links_galnodes[s.gallery].push(s);
+						links_galnodes[t.gallery].push(t);
 					};
 				};
 			};
