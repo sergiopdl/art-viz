@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>National Gallery of Art Viz</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!--optional color scales, you can specify your own color scale-->
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
@@ -11,14 +12,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/intro.css">
+    <link rel="stylesheet" type="text/css" href="style/shared.css">
 </head>
 <div class="navbar navbar-default" role="navigation">
   <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/">
           <span class="nav-brand">
             <span>.data(art)</span>
           </span>
@@ -31,8 +32,11 @@
         </button>
       </div>
       <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right nav-font">
-              <li><a href="about.html">About</a></li>
+          <ul class="nav navbar-nav nav-stacked navbar-right nav-font">
+              <li id="intro"><a href="/intro.html">Intro</a></li>
+              <li id="tutorial"><a href="/tutorial.html">Tutorial</a></li>
+              <li id="main"><a href="/main.html">Explore</a></li>
+              <li id="about"><a href="/about.html">About</a></li>
           </ul>
       </div>
     </div>
@@ -1057,6 +1061,11 @@
 	//     { "name": "18th- and 19th-Century Spanish", "value": 9},
 	//    	{ "name": "Special Exhibitions", "value": 16}
 	// ]
+    $(document).ready(function () {
+        $(".nav li").removeClass("active");
+        $('#intro').addClass('active');
+    });
+
 	</script>
 </body>
 </html>

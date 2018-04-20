@@ -262,23 +262,6 @@ polygon {
   visibility: hidden;
 }
 
-.nav-font {
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.nav-brand {
-    font-family: 'Special Elite', 'Helvetica Neue', 'Roboto', sans-serif;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-h1 {
-    font-size: 30px;
-    font-family: 'Helvetica Neue', 'Roboto', Verdana, sans-serif;
-    font-weight: 300;
-}
-
 .map-margin-bottom {
 	margin-bottom: 280px;
 }
